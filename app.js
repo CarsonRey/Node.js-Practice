@@ -39,13 +39,17 @@
 
 // we grab the event EventEmitter class from the events module
 const EventEmitter = require('events')
-// create a new instance
-const emitter = new EventEmitter
 
-// Adding an event listener
-emitter.on(`Greeting`, (name) => {
-  console.log(`Hey there ${name}`)
+const Logger = require('./logger')
+const logger = new Logger();
+
+logger.on(`messageLogged`, (arg) => {
+  console.log(`${arg.url} is the url from logger`)
 })
 
-// Adding an event with .emit
-emitter.emit('Greeting', "Carson")
+// Adding an event with .emit (this iterates over all listeners and calls them synchronously)
+// emitter.emit('Greeting', "Carson")
+
+
+
+logger.log('Hello')
