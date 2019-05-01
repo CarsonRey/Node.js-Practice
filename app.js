@@ -38,18 +38,38 @@
 // --------------------------------------
 
 // we grab the event EventEmitter class from the events module
-const EventEmitter = require('events')
+// const EventEmitter = require('events')
+//
+// const Logger = require('./logger')
+// const logger = new Logger();
+//
+// logger.on(`messageLogged`, (arg) => {
+//   console.log(`${arg.url} is the url from logger`)
+// })
+//
+// // Adding an event with .emit (this iterates over all listeners and calls them synchronously)
+// // emitter.emit('Greeting', "Carson")
+//
+//
+//
+// logger.log('Hello')
+// --------------------------------------
+// WORKING WITH HTTP MODULE
+// --------------------------------------
 
-const Logger = require('./logger')
-const logger = new Logger();
+const http = require ('http')
 
-logger.on(`messageLogged`, (arg) => {
-  console.log(`${arg.url} is the url from logger`)
-})
+// this server is actually an instance of EventEmitter
+// http.Server < net.Server < EventMitter
+const server = http.createServer()
 
-// Adding an event with .emit (this iterates over all listeners and calls them synchronously)
-// emitter.emit('Greeting', "Carson")
+// 'connection' is convention/ in the docs for this .on method. The method also takes a callback function as its second argument.
+// This is an event handler
+server.on('connection', (socket) => {
+  console.log('New connection...')
+} )
 
+server.listen(3000)
 
-
-logger.log('Hello')
+console.log('Listening on port 3000...')
+// When we run the application, we can see the above console log. When we navigate to the port that we're listening to, we get the 'New connection...' message
