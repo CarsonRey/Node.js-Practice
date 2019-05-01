@@ -57,19 +57,41 @@
 // WORKING WITH HTTP MODULE
 // --------------------------------------
 
-const http = require ('http')
+// const http = require ('http')
+//
+// // this server is actually an instance of EventEmitter
+// // http.Server < net.Server < EventMitter
+// const server = http.createServer()
+//
+// // 'connection' is convention/ in the docs for this .on method. The method also takes a callback function as its second argument.
+// // This is an event handler
+// server.on('connection', (socket) => {
+//   console.log('New connection...')
+// } )
+//
+// server.listen(3000)
+//
+// console.log('Listening on port 3000...')
+// // When we run the application, we can see the above console log. When we navigate to the port that we're listening to, we get the 'New connection...' message
 
-// this server is actually an instance of EventEmitter
-// http.Server < net.Server < EventMitter
-const server = http.createServer()
 
-// 'connection' is convention/ in the docs for this .on method. The method also takes a callback function as its second argument.
-// This is an event handler
-server.on('connection', (socket) => {
-  console.log('New connection...')
-} )
+const http = require('http');
+
+const server = http.createServer((req, resp) => {
+  if (req.url === '/'){
+    resp.write('Hello World')
+    resp.end()
+  }
+
+  if (req.url === '/api/example'){
+    resp.write(JSON.stringify(['usually an array of DB objects', 'but now just an array of strings']))
+    resp.end()
+  }
+})
+
+// we use express so we don't have to worry about piling on if statements to compensate for how many routes there are on our server
 
 server.listen(3000)
 
+
 console.log('Listening on port 3000...')
-// When we run the application, we can see the above console log. When we navigate to the port that we're listening to, we get the 'New connection...' message
